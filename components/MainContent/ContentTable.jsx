@@ -11,7 +11,9 @@ import { MdOutlineStar, MdOutlineStarBorder } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiDownload } from "react-icons/fi";
 import { useFiles } from "@/context/FileContext";
+import { FaCheck } from "react-icons/fa6";
 import toast from "react-hot-toast";
+
 
 const ContentTable = ({ files }) => {
   const { setFiles } = useFiles();
@@ -34,10 +36,10 @@ const ContentTable = ({ files }) => {
 
   const [sortMenuVisible, setSortMenuVisible] = useState(false);
 
-const handleSortOption = (key) => {
-  requestSort(key);
-  setSortMenuVisible(false); 
-};
+  const handleSortOption = (key) => {
+    requestSort(key);
+    setSortMenuVisible(false);
+  };
 
   const tableRef = useRef();
 
@@ -45,6 +47,7 @@ const handleSortOption = (key) => {
     const handleClickOutside = (event) => {
       if (tableRef.current && !tableRef.current.contains(event.target)) {
         setSelectedRowId(null);
+        setSortMenuVisible(false);
       }
     };
 
@@ -131,36 +134,27 @@ const handleSortOption = (key) => {
               {sortMenuVisible && (
                 <div
                   className="sort-dropdown"
-                  style={{
-                    position: "absolute",
-                    top: "100%",
-                    right: 0,
-                    background: "white",
-                    boxShadow: "0px 2px 10px rgba(0,0,0,0.15)",
-                    zIndex: 1000,
-                    borderRadius: "8px",
-                    padding: "8px",
-                    minWidth: "150px",
-                  }}
+                  ref={tableRef}
+                  
                 >
-                  <div
-                    className="sort-option"
-                    onClick={() => handleSortOption("name")}
-                  >
-                    Name
-                  </div>
-                  <div
-                    className="sort-option"
-                    onClick={() => handleSortOption("date")}
-                  >
-                    Last Modified
-                  </div>
-                  <div
-                    className="sort-option"
-                    onClick={() => handleSortOption("bytes")}
-                  >
-                    File Size
-                  </div>
+                  {sortOptions.map((option) => (
+                    <div
+                      key={option.key}
+                      className="sort-option"
+                      onClick={() => handleSortOption(option.key)}
+                    >
+                      {sortConfig.key === option.key ? (
+                        <span>
+                          <FaCheck size={23} />
+                        </span>
+                      ) : (
+                        <span
+                          style={{ width: "16px", marginRight: "8px" }}
+                        ></span>
+                      )}
+                      <span style={{padding: '5px 0'}}>{option.label}</span>
+                    </div>
+                  ))}
                 </div>
               )}
             </th>

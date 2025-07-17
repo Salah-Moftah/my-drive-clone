@@ -4,12 +4,12 @@ import "@/public/css/dropdownMenu.css";
 import DropdownItem from "./DropdownItem";
 import { dropdownItems } from "@/constants";
 import { DropdownContext } from "@/context/DropdownMenuContext";
-import { useFiles } from "@/context/FileContext"; 
+import { useFiles } from "@/context/FileContext";
 import toast from "react-hot-toast";
 
 const DropdownMenu = () => {
   const { isOpen, closeDropdown } = useContext(DropdownContext);
-  const { refreshFiles } = useFiles(); 
+  const { refreshFiles } = useFiles();
   const menuRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -57,12 +57,11 @@ const DropdownMenu = () => {
         body: formData,
       });
 
-      if (!res.ok) toast.success("File uploaded successfully");
+      if (!res.ok) toast.error("File upload failed");
 
       await res.json();
-      toast.error("File upload failed");
-
-      await refreshFiles(); 
+      toast.success("File uploaded successfully");
+      await refreshFiles();
     } catch (err) {
       console.error(err);
       toast.error("An error occurred during file upload");
