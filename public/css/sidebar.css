@@ -1,0 +1,111 @@
+.sidebar {
+  min-width: 220px;
+  max-width: 220px;
+  margin: 0 15px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-items-container {
+  overflow-y: auto;
+  max-height: calc(100vh - 80px);
+}
+
+.sidebar .sidebar-items {
+  overflow-y: auto;
+}
+
+.sidebar .sidebar-items li a {
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-color);
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 45px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.sidebar .sidebar-items li a:hover {
+  background: var(--Shadow-color);
+}
+
+.sidebar .sidebar-items li a.active {
+  background: #c2e7ff;
+}
+
+.sidebar .sidebar-items .storage {
+  padding: 8px 20px;
+}
+
+.sidebar .sidebar-items .progress {
+  background-color: #e1e3e1;
+  height: 4px;
+  width: 100%;
+  border-radius: 25px;
+  position: relative;
+}
+
+.sidebar .sidebar-items .progress::before {
+  content: '';
+  width: 30%;
+  border-radius: 25px;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--main-blue-color);
+}
+
+.sidebar .sidebar-items p {
+  color: #444746;
+  font-size: 13px;
+  margin: 10px 0;
+  line-height: 1.4;
+}
+
+.sidebar .sidebar-items .storage .storage-btn {
+  background-color: transparent;
+  color: var(--main-blue-color);
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: 1px solid #444746;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sidebar .sidebar-items .storage .storage-btn:hover {
+  background-color: var(--hover-blue-color);
+  transition: var(--main-transition);
+}
+
+.sidebar .new-button {
+  background-color: white;
+  position: relative;
+  overflow: hidden;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 18px 22px;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 20px ;
+  box-shadow: var(--main-box-shadow);
+  margin-bottom: 20px;
+  margin-left: 3px;
+}
+
+.sidebar .new-button:hover::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--hover-gray-color);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.574);
+  transition: 0.7s ease;
+}

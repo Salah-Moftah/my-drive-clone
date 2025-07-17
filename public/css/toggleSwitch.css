@@ -1,0 +1,40 @@
+.toggle-switch {
+  display: flex;
+  border: 1px solid var(--icon-color);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 35px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s ease-in-out;
+}
+
+.frist-btn {
+  border-right: 1px solid var(--icon-color);
+}
+
+.toggle-btn.active {
+  background: #cce5ff;
+}
+
+.check-icon {
+  position: absolute;
+  left: -10px;
+  opacity: 0;
+  transition: left 0.3s ease-in-out, opacity 0.2s;
+}
+
+.toggle-btn.active .check-icon {
+  left: 5px;
+  opacity: 1;
+}

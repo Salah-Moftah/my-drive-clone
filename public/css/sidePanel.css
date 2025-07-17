@@ -1,0 +1,42 @@
+.side-panel {
+  padding: 0 7px;
+}
+
+.side-panel .icons-area {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.side-panel .icons-area .line {
+  background-color: var(--Shadow-color);
+  width: 50%;
+  margin: 15px auto;
+  height: 1px;
+}
+
+.side-panel img {
+  width: 18px;
+  height: 18px;
+}
+
+.show-side-panel {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  bottom: 7px;
+  right: 7px;
+}
+.show-side-panel:hover {
+  background-color: var(--hover-gray-color);
+  transition: var(--main-transition);
+}
+
+.show-side-panel .ioios-search {
+  color: #5f6368;
+}

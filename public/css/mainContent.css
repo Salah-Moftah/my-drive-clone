@@ -1,0 +1,255 @@
+.main-content {
+  background-color: white;
+  height: 100%;
+  min-width: 468px;
+  border-radius: 20px 20px 0px 0px;
+  padding: 20px 5px;
+  overflow: visible;
+}
+
+.main-content .content-header {
+  padding-right: 20px;
+}
+
+.main-content .content-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0 20px 0;
+}
+
+.main-content .content-head .my-drive-dropdown {
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.main-content .content-head .my-drive-dropdown:hover {
+  background-color: var(--Shadow-color);
+}
+
+.content-head .layout {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.main-content .filter-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 20px;
+}
+
+.main-content .table-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 30px 13px 10px 20px;
+}
+
+.main-content .drive-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+
+.main-content .drive-table th {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--icon-color);
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 15px 15px 0px 0px;
+  height: 50px;
+}
+
+.main-content .drive-table th .header-name {
+  padding-left: 10px;
+}
+
+.main-content .drive-table td  {
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.main-content .drive-table th:hover {
+  background-color: var(--Shadow-color);
+}
+
+.main-content .drive-table th,
+.drive-table td {
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.main-content .drive-table thead .name-col {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.main-content .drive-table thead .date-col {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.main-content .drive-table tbody tr:hover td {
+  background-color: var(--Shadow-color);
+}
+
+.main-content .drive-table tbody tr {
+  cursor: default;
+}
+
+.main-content .drive-table .owner-img {
+  width: 25px;
+  height: 25px;
+}
+
+.main-content .drive-table tbody .owner-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.main-content .dots-col {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.main-content .row-hover-actions .more-actions {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.row-hover-actions:hover .more-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.main-content .drive-table .dots {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
+  position: relative;
+}
+
+.main-content .drive-table .sorting {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.main-content .drive-table .sort-col {
+  padding: 10px;
+}
+
+.main-content .drive-table .file-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.9;
+  margin: 0 16px;
+}
+
+.main-content .drive-table tbody td:not(:nth-child(1)) {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.grid-container {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+  padding: 20px;
+}
+
+.grid-container .file-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--second-gray-color);
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.grid-container .file-card:hover {
+  background-color: #f0f0f0;
+}
+
+.grid-container .file-name {
+  font-size: 14px;
+  color: var(--text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.grid-container .file-name h4,
+.grid-container .file-name p {
+  margin: 0;
+}
+
+.grid-container .file-name h4 {
+  margin-bottom: 5px;
+}
+.grid-container .file-name p {
+  font-size: 13px;
+}
+
+.grid-container .folder-icon {
+  width: 22px;
+  height: 22px
+}
+
+.grid-container .file-options {
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.drive-table tbody tr.selected-row {
+  background-color: var(--second-blue-color) !important;
+}
+
+@media (max-width: 1024px) {
+  .hide-on-large {
+    display: none;
+  }
+
+  .main-content .drive-table tbody tr td {
+    padding: 8px 0px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hide-on-medium {
+    display: none;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hide-on-small {
+    display: none;
+  }
+}
