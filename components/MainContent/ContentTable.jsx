@@ -10,13 +10,16 @@ import { MdSort } from "react-icons/md";
 import { MdOutlineStar, MdOutlineStarBorder } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiDownload } from "react-icons/fi";
+import { useFiles } from "@/context/FileContext"; 
+import toast from 'react-hot-toast';
 
-const ContentTable = ({ files, setFiles }) => {
+const ContentTable = ({ files }) => {
+  const { setFiles } = useFiles(); 
   const [selectedRowId, setSelectedRowId] = useState(null);
   const { items: sortedFiles, requestSort, sortConfig } = useSortableData(files, {
-  key: "name",
-  direction: "asc"
-});
+    key: "name",
+    direction: "asc",
+  });
 
   const tableRef = useRef();
 
@@ -36,9 +39,9 @@ const ContentTable = ({ files, setFiles }) => {
   const handleSort = (type) => requestSort(type);
 
   const getSortIcon = (type) => {
-  if (sortConfig.key !== type) return null;
-  return sortConfig.direction === "asc" ? <IoMdArrowUp /> : <IoMdArrowDown />;
-};
+    if (sortConfig.key !== type) return null;
+    return sortConfig.direction === "asc" ? <IoMdArrowUp /> : <IoMdArrowDown />;
+  };
 
   const toggleStar = async (id) => {
     const res = await fetch(`/api/toggle-star?id=${id}`, {
@@ -61,10 +64,11 @@ const ContentTable = ({ files, setFiles }) => {
     });
 
     if (res.ok) {
-      setFiles((prev) => prev.filter((file) => file._id !== id));
-    } else {
-      alert("Delete failed");
-    }
+    setFiles((prev) => prev.filter((file) => file._id !== id));
+    toast.success('The file was deleted successfully.')
+  } else {
+    toast.error('Failed to delete file');
+  }
   };
 
   return (
@@ -74,21 +78,14 @@ const ContentTable = ({ files, setFiles }) => {
           <tr>
             <th className="name-col" onClick={() => handleSort("name")}>
               <span className="header-name">Name</span>
-              <HoverCircleBackground>
-                {getSortIcon("name")}
-              </HoverCircleBackground>
+              <HoverCircleBackground>{getSortIcon("name")}</HoverCircleBackground>
             </th>
             <th className="owner-col hide-on-small">
               <span className="header-name">Owner</span>
             </th>
-            <th
-              className="date-col hide-on-medium"
-              onClick={() => handleSort("date")}
-            >
+            <th className="date-col hide-on-medium" onClick={() => handleSort("date")}>
               <span className="header-name">Last Modified</span>
-              <HoverCircleBackground>
-                {getSortIcon("date")}
-              </HoverCircleBackground>
+              <HoverCircleBackground>{getSortIcon("date")}</HoverCircleBackground>
             </th>
             <th className="size-col hide-on-large">
               <span className="header-name">File Size</span>
@@ -105,38 +102,23 @@ const ContentTable = ({ files, setFiles }) => {
           {sortedFiles.map((file) => (
             <tr
               key={file._id}
-              className={`row-hover-actions ${
-                selectedRowId === file._id ? "selected-row" : ""
-              }`}
+              className={`row-hover-actions ${selectedRowId === file._id ? "selected-row" : ""}`}
               onClick={() =>
-                setSelectedRowId((prev) =>
-                  prev === file._id ? null : file._id
-                )
+                setSelectedRowId((prev) => (prev === file._id ? null : file._id))
               }
             >
               <td className="name-col">
-                <img
-                  src={getFileIcon(file.name)}
-                  alt="file icon"
-                  className={"file-icon"}
-                />
+                <img src={getFileIcon(file.name)} alt="file icon" className="file-icon" />
                 <span>
                   {file.name}
                   {file.isStarred && (
-                    <MdOutlineStar
-                      size={14}
-                      style={{ marginLeft: "10px", opacity: "0.8" }}
-                    />
+                    <MdOutlineStar size={14} style={{ marginLeft: "10px", opacity: "0.8" }} />
                   )}
                 </span>
               </td>
               <td className="owner-col hide-on-small">
                 <div className="owner-box">
-                  <img
-                    className="owner-img"
-                    src="/imgs/avatar.png"
-                    alt="avatar"
-                  />
+                  <img className="owner-img" src="/imgs/avatar.png" alt="avatar" />
                   <span>me</span>
                 </div>
               </td>

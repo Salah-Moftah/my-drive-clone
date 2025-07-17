@@ -9,6 +9,7 @@ import MainContent from "@/components/MainContent/MainContent";
 import DropdownMenu from "@/components/DropdownMenu/DropdownMenu";
 import RightSidebar from "@/components/RightSidebar/RightSidebar";
 import SidePanel from "@/components/RightSidebar/SidePanel";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <div className="main-content">
           <MainContent />
         </div>
-        
+
         <RightSidebar />
 
         <div className="side-panel">
@@ -35,6 +36,7 @@ function App() {
       </div>
 
       <DropdownMenu />
+      <Toaster position="bottom-left" />
     </main>
   );
 }

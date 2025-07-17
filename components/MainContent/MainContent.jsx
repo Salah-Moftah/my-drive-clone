@@ -6,34 +6,24 @@ import FilterDropdown from "../FilterDropdown";
 import { filterList } from "../../constants";
 import ContentTable from "./ContentTable";
 import ToggleSwitch from "./ToggleSwitch";
-import { useEffect, useState } from "react";
 import Loader from "../loader";
 import { useViewMode } from "@/context/ViewModeContext";
 import ContentGrid from "./ContentGrid";
+import { useFiles } from "@/context/FileContext"; 
+
+import { useState } from "react";
 
 const MainContent = () => {
-  const [loading, setLoading] = useState(true);
-  const [files, setFiles] = useState([]);
+  const { files, loading } = useFiles(); 
   const { viewMode } = useViewMode();
   const [search, setSearch] = useState("");
   const [sortType, setSortType] = useState("date");
-
-  const fetchFiles = async () => {
-    const res = await fetch("/api/files");
-    const data = await res.json();
-    setFiles(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchFiles();
-  }, []);
 
   const filteredFiles = files.filter((file) =>
     file.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const sortedFiles = [...files].sort((a, b) => {
+  const sortedFiles = [...filteredFiles].sort((a, b) => {
     if (sortType === "name") {
       return a.name.localeCompare(b.name);
     } else {
@@ -64,12 +54,13 @@ const MainContent = () => {
           ))}
         </div>
       </div>
+
       {loading ? (
         <Loader />
       ) : sortedFiles.length === 0 ? (
         <p>No files uploaded.</p>
       ) : viewMode === "list" ? (
-        <ContentTable files={sortedFiles} setFiles={setFiles} />
+        <ContentTable files={sortedFiles} />
       ) : (
         <ContentGrid files={sortedFiles} />
       )}
