@@ -57,11 +57,11 @@ const DropdownMenu = ({ fetchFiles }) => {
       if (!res.ok) throw new Error("Upload failed");
 
       await res.json();
-      alert("✅ File uploaded successfully");
+      alert("File uploaded successfully");
       fetchFiles?.();
     } catch (err) {
       console.error(err);
-      alert("❌ Failed to upload file");
+      alert("Failed to upload file");
     } finally {
       setUploading(false);
       closeDropdown();
