@@ -10,16 +10,34 @@ import { MdSort } from "react-icons/md";
 import { MdOutlineStar, MdOutlineStarBorder } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiDownload } from "react-icons/fi";
-import { useFiles } from "@/context/FileContext"; 
-import toast from 'react-hot-toast';
+import { useFiles } from "@/context/FileContext";
+import toast from "react-hot-toast";
 
 const ContentTable = ({ files }) => {
-  const { setFiles } = useFiles(); 
+  const { setFiles } = useFiles();
   const [selectedRowId, setSelectedRowId] = useState(null);
-  const { items: sortedFiles, requestSort, sortConfig } = useSortableData(files, {
+  const {
+    items: sortedFiles,
+    requestSort,
+    sortConfig,
+  } = useSortableData(files, {
     key: "name",
     direction: "asc",
   });
+
+  const [showSortMenu, setShowSortMenu] = useState(false);
+  const sortOptions = [
+    { key: "name", label: "Name" },
+    { key: "date", label: "Last Modified" },
+    { key: "bytes", label: "File Size" },
+  ];
+
+  const [sortMenuVisible, setSortMenuVisible] = useState(false);
+
+const handleSortOption = (key) => {
+  requestSort(key);
+  setSortMenuVisible(false); 
+};
 
   const tableRef = useRef();
 
@@ -64,11 +82,11 @@ const ContentTable = ({ files }) => {
     });
 
     if (res.ok) {
-    setFiles((prev) => prev.filter((file) => file._id !== id));
-    toast.success('The file was deleted successfully.')
-  } else {
-    toast.error('Failed to delete file');
-  }
+      setFiles((prev) => prev.filter((file) => file._id !== id));
+      toast.success("The file was deleted successfully.");
+    } else {
+      toast.error("Failed to delete file");
+    }
   };
 
   return (
@@ -78,23 +96,73 @@ const ContentTable = ({ files }) => {
           <tr>
             <th className="name-col" onClick={() => handleSort("name")}>
               <span className="header-name">Name</span>
-              <HoverCircleBackground>{getSortIcon("name")}</HoverCircleBackground>
+              <HoverCircleBackground>
+                {getSortIcon("name")}
+              </HoverCircleBackground>
             </th>
             <th className="owner-col hide-on-small">
               <span className="header-name">Owner</span>
             </th>
-            <th className="date-col hide-on-medium" onClick={() => handleSort("date")}>
+            <th
+              className="date-col hide-on-medium"
+              onClick={() => handleSort("date")}
+            >
               <span className="header-name">Last Modified</span>
-              <HoverCircleBackground>{getSortIcon("date")}</HoverCircleBackground>
+              <HoverCircleBackground>
+                {getSortIcon("date")}
+              </HoverCircleBackground>
             </th>
             <th className="size-col hide-on-large">
               <span className="header-name">File Size</span>
             </th>
-            <th className="sort-col hide-on-large">
-              <div className="sorting">
+            <th
+              className="sort-col hide-on-large"
+              style={{ position: "relative" }}
+            >
+              <div
+                className="sorting"
+                onClick={() => setSortMenuVisible((prev) => !prev)}
+                style={{ cursor: "pointer" }}
+              >
                 <MdSort />
                 <span className="header-name">Sort</span>
               </div>
+
+              {sortMenuVisible && (
+                <div
+                  className="sort-dropdown"
+                  style={{
+                    position: "absolute",
+                    top: "100%",
+                    right: 0,
+                    background: "white",
+                    boxShadow: "0px 2px 10px rgba(0,0,0,0.15)",
+                    zIndex: 1000,
+                    borderRadius: "8px",
+                    padding: "8px",
+                    minWidth: "150px",
+                  }}
+                >
+                  <div
+                    className="sort-option"
+                    onClick={() => handleSortOption("name")}
+                  >
+                    Name
+                  </div>
+                  <div
+                    className="sort-option"
+                    onClick={() => handleSortOption("date")}
+                  >
+                    Last Modified
+                  </div>
+                  <div
+                    className="sort-option"
+                    onClick={() => handleSortOption("bytes")}
+                  >
+                    File Size
+                  </div>
+                </div>
+              )}
             </th>
           </tr>
         </thead>
@@ -102,23 +170,38 @@ const ContentTable = ({ files }) => {
           {sortedFiles.map((file) => (
             <tr
               key={file._id}
-              className={`row-hover-actions ${selectedRowId === file._id ? "selected-row" : ""}`}
+              className={`row-hover-actions ${
+                selectedRowId === file._id ? "selected-row" : ""
+              }`}
               onClick={() =>
-                setSelectedRowId((prev) => (prev === file._id ? null : file._id))
+                setSelectedRowId((prev) =>
+                  prev === file._id ? null : file._id
+                )
               }
             >
               <td className="name-col">
-                <img src={getFileIcon(file.name)} alt="file icon" className="file-icon" />
+                <img
+                  src={getFileIcon(file.name)}
+                  alt="file icon"
+                  className="file-icon"
+                />
                 <span>
                   {file.name}
                   {file.isStarred && (
-                    <MdOutlineStar size={14} style={{ marginLeft: "10px", opacity: "0.8" }} />
+                    <MdOutlineStar
+                      size={14}
+                      style={{ marginLeft: "10px", opacity: "0.8" }}
+                    />
                   )}
                 </span>
               </td>
               <td className="owner-col hide-on-small">
                 <div className="owner-box">
-                  <img className="owner-img" src="/imgs/avatar.png" alt="avatar" />
+                  <img
+                    className="owner-img"
+                    src="/imgs/avatar.png"
+                    alt="avatar"
+                  />
                   <span>me</span>
                 </div>
               </td>
